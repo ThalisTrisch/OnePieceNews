@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="images/one-piece-mugiwara-flag-logo-08F872AFB6-seeklogo.com.png">
-    <link rel="stylesheet" type="text/css" href="css/style1.css">
+    <link rel="stylesheet" type="text/css" href="../css/style1.css">
     <title>Pagina Inicial - One piece</title>
 </head>
 <body>
@@ -27,7 +27,7 @@
     <header class="header">
         <img class="logo" src="https://logosmarcas.net/wp-content/uploads/2021/10/One-Piece-Logo.png" alt="LogoOnePiece">
         <div id="buttonmenu" class="divmenubutton" onclick="mostrarMenu()">
-            <img class="menubutton" src="images/menu.png" alt="menu">
+            <img class="menubutton" src="../images/menu.png" alt="menu">
         </div>
     </header>
     <div class="gradientback">
@@ -67,7 +67,7 @@
                     <button class="formbutton" onclick="mudarform()">Logar</button>
                 </div>
                
-                <form class="form" action="php/cadastrar.php" method="post">
+                <form class="form" action="../php/cadastrar.php" method="post">
                     <input class="inputform" type="text" name="nome" required placeholder="Nome de usuario"/>
                     <input class="inputform" type="email" name="email" required placeholder="Seu email"/>
                     <input class="inputform" type="password" name="senha" required placeholder="Senha"/>
@@ -90,7 +90,7 @@
                     <button class="formbutton" onclick="mudarform()">Cadastrar</button>
                     <button class="selectedformbutton">Logar</button>
                 </div>
-                <form class="form" action="php/logar.php" method="post">
+                <form class="form" action="../php/logar.php" method="post">
                     <input class="inputform" type="email" name="email" required placeholder="email"/>
                     <input class="inputform" type="password" required name="senha" placeholder="senha"/>
                     <button type="submit" class="cardbutton">Logar</button>

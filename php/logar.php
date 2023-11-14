@@ -1,5 +1,4 @@
 <?php
-session_start();
 var_dump($_POST);
 include 'bdconnection.php';
 
@@ -16,10 +15,10 @@ $data = $stmt->fetchAll();
 if($data){
     //logado
     $_SESSION['user_email'] = $email;
-    header('Location: ../page2.php');
+    header('Location: ../pages/noticias.php');
 }else{
     //Não logado
-    header('Location: ../page1.php');
+    header('Location: ../pages/welcome.php');
 }
 
 ?>
