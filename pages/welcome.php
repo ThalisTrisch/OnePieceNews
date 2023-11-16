@@ -10,7 +10,10 @@
 </head>
 <body>
     <?php
-    
+    // require_once("../php/bdconnection.php");
+    // if($_SESSION){
+    //     header('Location: noticias.php');
+    // }
     ?>
     <div class="invisible" id="menuheader" onclick="ocultarMenu()">
         <div class="headermenu">
