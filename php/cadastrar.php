@@ -5,7 +5,7 @@ include 'bdconnection.php';
 $email = $_POST['email'];
 $nome = $_POST['nome'];
 $senha = $_POST['senha'];
-$sql = "SELECT vl_nome FROM tb_usuario where vl_email = '$email'";
+$sql = "SELECT * FROM tb_usuario where vl_email = '$email'";
 $stmt = $conexao->query($sql);
 $data = $stmt->fetchAll();
 
