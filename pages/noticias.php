@@ -74,44 +74,37 @@
     <section>
         <div class="titulobar">
             <div class="titulo">
-                <div>
-                    <p class="titulotext">Postagens</p>
-                </div>
-                <div class="links">
-                    <button class="btntitulo">novidades</button>
-                    <a href="meuperfil.php"><button class="btntitulo">Perfil</button></a>
-                </div>
-                
+                <p class="titulotext">Postagens</p>
             </div>
         </div>
         <div class="divnoticias">
             <?php
-                require_once("../php/bdconnection.php");
-                $sql = "SELECT * from tb_novidade as A, tb_usuario as B where A.vl_email = B.vl_email";
+                require_once('./php/bdconnection.php');
+                $sql = "SELECT * from tb_novidade";
                 $stmt = $conexao->query($sql);
                 $data = $stmt->fetchAll();
                 for($i=0;$i<count($data);$i++){
                     $imagem = $data[$i]['url_imagem'];
-                    $foto = $data[$i]['url_foto'];
-                    $titulo = $data[$i]['vl_titulo'];
+                    $conteudo = $data[$i]['vl_conteudo'];
                     $autor = $data[$i]['vl_email'];
-                    echo('
-                        <div class="cardnoticia">
-                            <img class="cardimg" src="'.$imagem.'"/>
-                            <div class="titulopostagem">
-                                <p class="titulopostagem">'.$titulo.'</p>
-                            </div>
-                            <div class="descricao">
-                                <div class="autor">
-                                    <img class="fotousuario" src="'.$foto.'" alt="">
-                                    <p class="nomeusuario">'.$autor.'</p> 
-                                </div>
-                                <img class="fotosalva" src="https://cdn-icons-png.flaticon.com/512/5662/5662990.png" alt="">
-                            </div>
-                        </div>'
-                    );
+                    echo('<div class="cardnoticia"><img class="cardimg" src="'.$imagem.'"><div class="divcardtext"><p class="cardtext">'.$conteudo.'</p><br><p class="cardtext">'.$autor.'</p></div></div>');
                 };
             ?>
+            <div class="cardnoticia">
+                <div>
+                    <img class="cardimg" src="https://www.guiaviagensbrasil.com/imagens/Imagem%20do%20mar%20calma%20e%20belo%20da%20Praia%20da%20Engenhoca-Itacar%C3%A9-Bahia-BA.jpg">
+                    <div class="divcardtext">
+                        <p class="cardtext">Lançamento da live action de One Piece será 31/08</p>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="cardnoticia">
+                <img class="cardimg" src="https://rare-gallery.com/mocahbig/1375199-luffy-gear-5-sun-god-nika-one-piece-4k-pc-wallpaper.jpg">
+                <div class="divcardtext">
+                    <p class="cardtext">Despertar de luffy está previsto para final de julho</p>
+                </div>
+            </div>
         </div>
     </section>
     <footer class="rodape">

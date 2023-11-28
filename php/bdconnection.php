@@ -1,6 +1,6 @@
 <?php
     session_start();
-    $if = false;
+    $if = true;
     $servidor;
     $if ?  $servidor = "192.168.20.18" :  $servidor = "200.19.1.18";
     $porta = 5432;
