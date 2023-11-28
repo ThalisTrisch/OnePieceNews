@@ -61,12 +61,6 @@
     </style>
 </head>
 <body>
-    <?php
-        require_once("../php/bdconnection.php");
-        if(!$_SESSION){
-            header('Location: welcome.php');
-        }
-    ?>
     <header class="header">
         <img class="logo" src="https://logosmarcas.net/wp-content/uploads/2021/10/One-Piece-Logo.png" alt="LogoOnePiece">
         <a href="welcome.php"><button class="voltar">Voltar</button></a>

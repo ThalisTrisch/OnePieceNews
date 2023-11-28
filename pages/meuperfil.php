@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="images/one-piece-mugiwara-flag-logo-08F872AFB6-seeklogo.com.png">
-    <link rel="stylesheet" type="text/css" href="../css/noticias.css">
+    <link rel="stylesheet" type="text/css" href="style2.css">
     <title>Pagina Inicial</title>
     <style>
         *{margin:0;padding:0;font-family: sans-serif;color: rgb(101, 132, 161)}
@@ -55,39 +55,47 @@
             display: flex;align-items: center;gap: 20px;
         }.fotosalva{
             height: 30%;
-        }.btntitulo{
-            width:fit-content; background-color:transparent;font-size:20px;margin-right:20px;border-radius:10px;border: 2px solid rgb(101, 132, 161);padding:5px 20px 5px 20px;
+        }.perfil{
+            padding-top:76px;width:100%;height:140px;background-color:black;display:flex;gap:100px;
+            justify-content: center;align-items: center;
+        }.fotoperfil{
+            width:100px;height:100px;
+        }.divexcluir{
+            width:40px;height:40px;background-color:red;position:fixed;;border-radius:0px 0px 20px 0px;
+            display:flex;justify-content:center;align-items: center;
+        }.divexcluir>img{
+            width:26px;height:26px;margin-bottom:4px;margin-right:4px;
+        }.textpostagens{
+            text-align:center;margin:30px 0px;
         }
     </style>
 </head>
 <body>
-    <?php
-        require_once("../php/bdconnection.php");
-        if(!$_SESSION){
-            header('Location: welcome.php');
-        }
-    ?>
     <header class="header">
         <img class="logo" src="https://logosmarcas.net/wp-content/uploads/2021/10/One-Piece-Logo.png" alt="LogoOnePiece">
-        <a href="welcome.php"><button class="voltar">Voltar</button></a>
+        <a href="noticias.php"><button class="voltar">Voltar</button></a>
     </header>
-    <section>
-        <div class="titulobar">
-            <div class="titulo">
-                <div>
-                    <p class="titulotext">Postagens</p>
-                </div>
-                <div class="links">
-                    <button class="btntitulo">novidades</button>
-                    <a href="meuperfil.php"><button class="btntitulo">Perfil</button></a>
-                </div>
-                
+    <div class="perfil">
+        <?php 
+        require_once("../php/bdconnection.php");
+        $sql = "SELECT * from tb_usuario where vl_email = '".$_SESSION['user_email']."'";
+        $stmt = $conexao->query($sql);
+        $data = $stmt->fetchAll();
+        echo('
+            <img src="'.$data[0]['url_foto'].'" alt="" class="fotoperfil">
+            <div>
+                <h1>'.$data[0]['nm_usuario'].'</h1>
+                <p>'.$data[0]['vl_email'].'</p>
             </div>
-        </div>
-        <div class="divnoticias">
-            <?php
+            <p>Biografia: <br>'.$data[0]['vl_biografia'].'</p>
+            ');
+        ?>
+    </div>
+    <h2 class="textpostagens">Suas Postagens</h2>
+    <div class="divnoticias">
+        <?php
                 require_once("../php/bdconnection.php");
-                $sql = "SELECT * from tb_novidade as A, tb_usuario as B where A.vl_email = B.vl_email";
+                $sql = "SELECT * from tb_novidade as A, tb_usuario as B where A.vl_email = B.vl_email and A.vl_email = '".$_SESSION['user_email']."'";
                 $stmt = $conexao->query($sql);
                 $data = $stmt->fetchAll();
                 for($i=0;$i<count($data);$i++){
@@ -96,7 +104,9 @@
                     $titulo = $data[$i]['vl_titulo'];
                     $autor = $data[$i]['vl_email'];
                     echo('
+                        
                         <div class="cardnoticia">
+                            <div class="divexcluir"><img src="https://cdn-icons-png.flaticon.com/512/126/126468.png"/></div>
                             <img class="cardimg" src="'.$imagem.'"/>
                             <div class="titulopostagem">
                                 <p class="titulopostagem">'.$titulo.'</p>
@@ -108,17 +118,11 @@
                                 </div>
                                 <img class="fotosalva" src="https://cdn-icons-png.flaticon.com/512/5662/5662990.png" alt="">
                             </div>
-                        </div>'
+                        </div>
+                        '
                     );
                 };
             ?>
-        </div>
-    </section>
-    <footer class="rodape">
-        <div class="contatos">
-            <p class="titulocontatos">Contatos</p>
-            <p>telefone: (00) 90000-0000<br>email: emailficticio@gmail.com</p>
-        </div>
-    </footer>
+    </div>
 </body>
 </html>
