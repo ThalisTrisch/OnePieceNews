@@ -1,12 +1,16 @@
 <?php
-var_dump($_POST);
+// var_dump($_POST);
 include 'bdconnection.php';
+session_start();
+$titulo = $_POST['titulo'];
+$conteudo = $_POST['conteudo'];
+$imagem = $_POST['imagem'];
 
-$email = $_POST['email'];
-$nome = $_POST['nome'];
-$senha = $_POST['senha'];
-
-$sql = "insert into tb_noticia values('$email','$nome','Olá, sou novo aqui!','$senha')";
-$conexao->query($sql);
-
+$sql = "insert into tb_postagem values('$conteudo','$titulo','".$_SESSION['user_email']."','$imagem')";
+try {
+    $conexao->query($sql);
+    header('Location: ../pages/postagem.php');
+} catch (\Throwable $th) {
+    throw $th;
+}
 ?>

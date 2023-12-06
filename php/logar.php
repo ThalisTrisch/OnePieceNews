@@ -1,6 +1,6 @@
 <?php
 include 'bdconnection.php';
-
+session_start();
 if (!$conexao) {
     die("Não foi possível se conectar ao banco de dados.");
 }
@@ -13,7 +13,7 @@ $data = $stmt->fetchAll();
 if($data){
     //logado
     $_SESSION['user_email'] = $email;
-    header('Location: ../pages/noticias.php');
+    header('Location: ../pages/postagem.php');
 }else{
     //Não logado
     header('Location: ../pages/welcome.php');

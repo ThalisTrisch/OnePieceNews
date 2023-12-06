@@ -20,7 +20,7 @@
         }.logo{
             height:90px;margin: 10px;margin-left: 40px;
         }.rodape{
-            position:fixed;width: 100%;height: 100px;background-color: #080808;display: flex;align-items: center;
+            position:fixed;width: 100%;height: 70px;background-color: #080808;display: flex;align-items: center;
             padding-top: 20px;bottom:0px;
         }.contatos{
             padding-left: 10%;padding-right: 10%;
@@ -37,17 +37,25 @@
             padding: 10px;border: 2px solid rgb(101, 132, 161);background-color: transparent;
             color:  rgb(101, 132, 161);margin-right: 40px;font-size: 20px;border-radius: 10px;
         }.cardnoticia{
-            padding:0px;
+            padding:0px; background-color:rgb(101, 132, 161);
         }.divnoticias{
             display: flex;justify-content: center;flex-wrap: wrap;gap:20px;padding: 10px;
         }.cardimg{
-            width: 200px;margin:0px;
+            width: 200px;height:150px;margin:0px;
         }.nomeusuario{
             font-size:10px;
         }.fotousuario{
             width: 30px;height:30px;border-radius: 100%;
         }.titulopostagem{
-            height:24px;background-color:rgb(101, 132, 161);color:black;text-align:center;
+            background-color:rgb(101, 132, 161);color:black;text-align:center;padding-bottom:2px;
+            max-width:200px;
+        }.descricao{
+            display: flex;flex-direction: row;justify-content: space-around;align-items: center; 
+            height: 60px; background-color:#0e0d22;margin:0px
+        }.autor{
+            display: flex;align-items: center;gap: 20px;
+        }.fotosalva{
+            height: 30%;
         }.descricao{
             display: flex;flex-direction: row;justify-content: space-around;align-items: center; 
             height: 60px; background-color:#0e0d22;margin:0px
@@ -72,8 +80,9 @@
                     <p class="titulotext">Postagens</p>
                 </div>
                 <div class="links">
-                    <button class="btntitulo">novidades</button>
+                    <a href="criarpostagem.php"><button class="btntitulo">Criar Postagem</button></a>
                     <a href="meuperfil.php"><button class="btntitulo">Perfil</button></a>
+                    
                 </div>
                 
             </div>
@@ -81,7 +90,7 @@
         <div class="divnoticias">
             <?php
                 require_once("../php/bdconnection.php");
-                $sql = "SELECT * from tb_novidade as A, tb_usuario as B where A.vl_email = B.vl_email";
+                $sql = "SELECT * from tb_postagem as A, tb_usuario as B where A.vl_email = B.vl_email";
                 $stmt = $conexao->query($sql);
                 $data = $stmt->fetchAll();
                 for($i=0;$i<count($data);$i++){

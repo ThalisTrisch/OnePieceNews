@@ -1,13 +1,10 @@
 <?php
 include 'bdconnection.php';
-
+session_start();
 if (!$conexao) {
     die("Não foi possível se conectar ao banco de dados.");
 }
-$email = $_POST['email'];
-$senha = $_POST['senha'];
-$sql = "SELECT vl_email FROM tb_usuario where vl_email = '$email' and vl_senha = '$senha'";
-$stmt = $conexao->query($sql);
-$data = $stmt->fetchAll();
-
+$sql = "delete from tb_postagem where id_postagem = ".$_POST['postagem']."";
+$conexao->query($sql);
+header('Location: ../pages/meuperfil.php');
 ?>

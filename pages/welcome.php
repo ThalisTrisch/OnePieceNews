@@ -63,8 +63,8 @@
         }.tituloform{
             font-size: 30px;text-align: center;
         }.rodape{
-            width: 100%;height: 100px;background-color: #080808;display: flex;align-items: center;
-            padding-top: 20px;padding-bottom: 20px;
+            width: 100%;height: 70px;background-color: #080808;display: flex;align-items: center;
+            padding-top: 20px;bottom:0px;
         }.contatos{
             padding-left: 10%;padding-right: 10%;
         }.titulocontatos{
