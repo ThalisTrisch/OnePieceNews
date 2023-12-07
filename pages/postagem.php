@@ -109,7 +109,12 @@
                                     <img class="fotousuario" src="'.$foto.'" alt="">
                                     <p class="nomeusuario">'.$autor.'</p> 
                                 </div>
-                                <img class="fotosalva" src="https://cdn-icons-png.flaticon.com/512/5662/5662990.png" alt="">
+                                <form action="" method="post">
+                                    <button class="btnsalva">
+                                        <img class="fotosalva" src="https://cdn-icons-png.flaticon.com/512/5662/5662990.png" alt="">
+                                    </button>
+                                </form>
+                                
                             </div>
                         </div>'
                     );

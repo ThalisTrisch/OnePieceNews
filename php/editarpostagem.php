@@ -1,11 +1,12 @@
 <?php
-// var_dump($_POST);
+var_dump($_POST);
 include 'bdconnection.php';
 session_start();
-$nome = $_POST['nome'];
-$biografia = $_POST['biografia'];
-$foto = $_POST['foto'];
-$sql = "update tb_usuario set nm_usuario = '".$nome."',vl_biografia = '".$biografia."',url_foto = '".$foto."' where vl_email = '".$_SESSION['user_email']."'";
+$titulo = $_POST['titulo'];
+$conteudo = $_POST['conteudo'];
+$imagem = $_POST['imagem'];
+$postagem = $_POST['postagem'];
+$sql = "update tb_postagem set vl_titulo = '".$titulo."',vl_conteudo = '".$conteudo."',url_imagem = '".$imagem."' where id_postagem = '".$postagem."'";
 try { 
     $conexao->query($sql);
     header('Location: ../pages/meuperfil.php');

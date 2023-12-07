@@ -78,22 +78,28 @@
         <a href="meuperfil.php"><button class="voltar">Voltar</button></a>
     </header>
     <?php
-        echo($_POST[`postagem`]);
-        echo(`
+        require_once("../php/bdconnection.php");
+        $sql = "SELECT * from tb_postagem where id_postagem = ".$_POST['postagem']."";
+        $stmt = $conexao->query($sql);
+        $data = $stmt->fetchAll();
+        $titulo = $data[0]['vl_titulo'];
+        $conteudo = $data[0]['vl_conteudo'];
+        $imagem = $data[0]['url_imagem'];
+        echo('
         <form action="../php/editarpostagem.php" method="post" class="editarperfil">
-            <h2 class="titulo">Editar postagem id = /</h2>
+            <h2 class="titulo">Editar postagem id = '.$_POST['postagem'].'</h2>
             <div>
-                <div class="divdescricao"><label for="" id="descricao">nome</label></div><input type="text" class="textinput" name="nome" value="'.$data[0]['nm_usuario'].'">
-            </div>
-            <div>
-                <div class="divdescricao"><label for="" id="descricao">biografia</label></div><input type="text" class="textinput" name="biografia" value="'.$data[0]['vl_biografia'].'">
-            </div>
-            <div>
-                <div class="divdescricao"><label for="" id="descricao">foto</label></div><input type="text" class="textinput" name="foto" value="'.$data[0]['url_foto'].'">
-            </div>
-            <button type="submit" class="buttoninput">editar</button>
+            <div class="divdescricao"><label for="" id="descricao">titulo</label></div><input type="text" class="textinput" name="titulo" value="'.$titulo.'">
+        </div>
+        <div>
+            <div class="divdescricao"><label for="" id="descricao">conteudo</label></div><input type="text" class="textinput" name="conteudo"  value="'.$conteudo.'">
+        </div>
+        <div>
+            <div class="divdescricao"><label for="" id="descricao">imagem</label></div><input type="text" class="textinput" name="imagem"  value="'.$imagem.'">
+        </div>
+            <button type="submit" class="buttoninput" name="postagem" value="'.$_POST['postagem'].'">editar</button>
         </form>
-        `)
+        ');
     ?>
 </body>
 </html>
