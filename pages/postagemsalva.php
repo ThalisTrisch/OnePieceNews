@@ -68,17 +68,13 @@
 <body>
     <header class="header">
         <img class="logo" src="https://logosmarcas.net/wp-content/uploads/2021/10/One-Piece-Logo.png" alt="LogoOnePiece">
-        <a href="../php/sair.php"><button class="voltar">Sair</button></a>
+        <a href="postagem.php"><button class="voltar">voltar</button></a>
     </header>
     <section>
         <div class="titulobar">
             <div class="titulo">
                 <div>
-                    <p class="titulotext">Postagens</p>
-                </div>
-                <div class="links">
-                    <a href="criarpostagem.php"><button class="btntitulo">Criar Postagem</button></a>
-                    <a href="meuperfil.php"><button class="btntitulo">Perfil</button></a>
+                    <p class="titulotext">Postagens Salvas</p>
                 </div>
                 
             </div>
@@ -87,7 +83,7 @@
             <?php
                 require_once("../php/bdconnection.php");
                 session_start();
-                $sql = "SELECT * from tb_postagem as A, tb_usuario as B where A.vl_email = B.vl_email";
+                $sql = "select * from tb_usuario as A,tb_postagem as B,tb_postagemsalva as C where A.vl_email = B.vl_email and B.id_postagem = C.id_postagem and C.vl_email = '".$_SESSION['user_email']."'";
                 $stmt = $conexao->query($sql);
                 $data = $stmt->fetchAll();
                 for($i=0;$i<count($data);$i++){
@@ -95,16 +91,6 @@
                     $foto = $data[$i]['url_foto'];
                     $titulo = $data[$i]['vl_titulo'];
                     $autor = $data[$i]['vl_email'];
-                    $postagem = $data[$i]['id_postagem'];
-                    $sql = "SELECT * from tb_postagemsalva where vl_email = '".$_SESSION['user_email']."' and id_postagem = ".$postagem."";
-                    $stmt = $conexao->query($sql);
-                    $salva = $stmt->fetchAll();
-                    $btnsalvar;
-                    if($salva){
-                        $btnsalvar = '<button class="btnsalvo" type="submit" name="postagem" value="'.$postagem.'">';
-                    }else{
-                        $btnsalvar = '<button class="btnnaosalvo" type="submit" name="postagem" value="'.$postagem.'">';
-                    }
                     echo('
                         <div class="cardnoticia">
                             <img class="cardimg" src="'.$imagem.'"/>
@@ -117,7 +103,7 @@
                                     <p class="nomeusuario">'.$autor.'</p> 
                                 </div>
                                 <form action="../php/salvarpostagem.php" method="post">
-                                    '.$btnsalvar.'
+                                <button class="btnsalvo" type="submit" name="postagem" value="'.$data[$i]['id_postagem'].'">
                                         <img class="fotosalva" src="https://cdn-icons-png.flaticon.com/512/5662/5662990.png" alt="">
                                     </button>
                                 </form>

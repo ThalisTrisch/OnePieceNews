@@ -16,7 +16,7 @@
         .header{
             position:fixed;width:100%;display:flex;justify-content:space-between;align-items: center;
             background-color: #1b193a;align-items: center;height: 56px;box-shadow: 2px 2px 10px 1px  #141414;
-            padding-top: 10px;padding-bottom: 10px;
+            padding-top: 10px;padding-bottom: 10px;z-index:10;
         }.logo{
             height:90px;margin: 10px;margin-left: 40px;
         }.voltar{
@@ -69,22 +69,23 @@
             padding:4px;color:green;font-size:20px;margin-top:10px;
         }.editarperfil{
             display:flex;align-items:center ;gap:10px;flex-direction:column;margin:40px 0px;
+        }.fotosalva{
+            height: 20px;
+        }.btnsalvo{
+            background-color:white;border:1px solid black;border-radius:100%;height:30px;width:30px;
+        }.btnnaosalvo{
+            background-color:transparent;border:1px solid black;border-radius:100%;height:30px;width:30px;
         }
     </style>
 </head>
 <body>
     <header class="header">
         <img class="logo" src="https://logosmarcas.net/wp-content/uploads/2021/10/One-Piece-Logo.png" alt="LogoOnePiece">
-        <div>
-            <a href="postagemsalva.php"><button class="voltar">postagens salvas</button></a>
-            <a href="postagem.php"><button class="voltar">Voltar</button></a>
-        </div>
-        
+        <a href="postagem.php"><button class="voltar">Voltar</button></a>
     </header>
         <?php 
         session_start();
         require_once("../php/bdconnection.php");
-
         $sql = "SELECT * from tb_usuario where vl_email = '".$_SESSION['user_email']."'";
         $stmt = $conexao->query($sql);
         $data = $stmt->fetchAll();
@@ -112,13 +113,15 @@
                 <button type="submit" class="buttoninput">editar</button>
             </form>
         </div>
+        
             ');
         ?>
+    
     <h2 class="textpostagens">Suas Postagens</h2>
     <div class="divnoticias">
-        <?php
+    <?php
                 require_once("../php/bdconnection.php");
-                $sql = "SELECT * from tb_postagem as A, tb_usuario as B where A.vl_email = B.vl_email and A.vl_email = '".$_SESSION['user_email']."'";
+                $sql = "SELECT * from tb_postagem as A, tb_usuario as B where A.vl_email = B.vl_email";
                 $stmt = $conexao->query($sql);
                 $data = $stmt->fetchAll();
                 for($i=0;$i<count($data);$i++){
@@ -127,9 +130,17 @@
                     $titulo = $data[$i]['vl_titulo'];
                     $autor = $data[$i]['vl_email'];
                     $postagem = $data[$i]['id_postagem'];
+                    $sql = "SELECT * from tb_postagemsalva where vl_email = '".$data[$i]['vl_email']."' and id_postagem = ".$data[$i]['id_postagem']."";
+                    $stmt = $conexao->query($sql);
+                    $salva = $stmt->fetchAll();
+                    $btnsalvar;
+                    if($salva){
+                        $btnsalvar = '<button class="btnsalvo" type="submit" name="postagem" value="'.$data[$i]['id_postagem'].'">';
+                    }else{
+                        $btnsalvar = '<button class="btnnaosalvo" type="submit" name="postagem" value="'.$data[$i]['id_postagem'].'">';
+                    }
                     echo('
-
-                        <div>    
+                    <div>
                             <form action="editarpostagem.php" method="post">
                                 <button class="excluirpostagem" type="submit" name="postagem" value="'.$postagem.'">
                                     <img src="https://cdn-icons-png.flaticon.com/512/1159/1159633.png"/>
@@ -140,21 +151,69 @@
                                     <img src="https://cdn-icons-png.flaticon.com/512/126/126468.png"/>
                                 </button>
                             </form>
-                        
-                            <div class="cardnoticia">
-                                <img class="cardimg" src="'.$imagem.'"/>
-                                <div class="titulopostagem">
-                                    <p class="titulopostagem">'.$titulo.'</p>
+                        <div class="cardnoticia">
+                            <img class="cardimg" src="'.$imagem.'"/>
+                            <div class="titulopostagem">
+                                <p class="titulopostagem">'.$titulo.'</p>
+                            </div>
+                            <div class="descricao">
+                                <div class="autor">
+                                    <img class="fotousuario" src="'.$foto.'" alt="">
+                                    <p class="nomeusuario">'.$autor.'</p> 
                                 </div>
-                                <div class="descricao">
-                                    <div class="autor">
-                                        <img class="fotousuario" src="'.$foto.'" alt="">
-                                        <p class="nomeusuario">'.$autor.'</p> 
-                                    </div>
-                                </div>
+                                <form action="../php/salvarpostagem.php" method="post">
+                                    '.$btnsalvar.'
+                                        <img class="fotosalva" src="https://cdn-icons-png.flaticon.com/512/5662/5662990.png" alt="">
+                                    </button>
+                                </form>
+                                
                             </div>
                         </div>
-                        '
+                    </div>'
+                    );
+                };
+            ?>
+    </div>
+    <h2 class="textpostagens">Suas Postagens</h2>
+    <div class="divnoticias">
+    <?php
+                require_once("../php/bdconnection.php");
+                $sql = "select * from tb_usuario as A,tb_postagem as B,tb_postagemsalva as C where A.vl_email = B.vl_email and B.id_postagem = C.id_postagem and A.vl_email = '".$_SESSION['user_email']."';";
+                $stmt = $conexao->query($sql);
+                $data = $stmt->fetchAll();
+                for($i=0;$i<count($data);$i++){
+                    $imagem = $data[$i]['url_imagem'];
+                    $foto = $data[$i]['url_foto'];
+                    $titulo = $data[$i]['vl_titulo'];
+                    $autor = $data[$i]['vl_email'];
+                    $sql = "SELECT * from tb_postagemsalva where vl_email = '".$data[$i]['vl_email']."' and id_postagem = ".$data[$i]['id_postagem']."";
+                    $stmt = $conexao->query($sql);
+                    $salva = $stmt->fetchAll();
+                    $btnsalvar;
+                    if($salva){
+                        $btnsalvar = '<button class="btnsalvo" type="submit" name="postagem" value="'.$data[$i]['id_postagem'].'">';
+                    }else{
+                        $btnsalvar = '<button class="btnnaosalvo" type="submit" name="postagem" value="'.$data[$i]['id_postagem'].'">';
+                    }
+                    echo('
+                        <div class="cardnoticia">
+                            <img class="cardimg" src="'.$imagem.'"/>
+                            <div class="titulopostagem">
+                                <p class="titulopostagem">'.$titulo.'</p>
+                            </div>
+                            <div class="descricao">
+                                <div class="autor">
+                                    <img class="fotousuario" src="'.$foto.'" alt="">
+                                    <p class="nomeusuario">'.$autor.'</p> 
+                                </div>
+                                <form action="../php/salvarpostagem.php" method="post">
+                                    '.$btnsalvar.'
+                                        <img class="fotosalva" src="https://cdn-icons-png.flaticon.com/512/5662/5662990.png" alt="">
+                                    </button>
+                                </form>
+                                
+                            </div>
+                        </div>'
                     );
                 };
             ?>
